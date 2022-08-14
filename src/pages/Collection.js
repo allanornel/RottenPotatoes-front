@@ -1,81 +1,72 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { AiFillEye, AiOutlineEyeInvisible } from "react-icons/ai";
-
 import useAuth from "../hooks/useAuth";
 import requestProductionsApi from "../services/api/productions";
-import requestWatchedApi from "../services/api/watched";
 import styled from "styled-components";
+import Header from "../components/Header";
+import Production from "../components/Production";
+import Footer from "../components/Footer";
 
 function Collection() {
   const { token } = useAuth();
+  const [loading, setLoading] = useState(false);
   const [userProductions, setUserProductions] = useState([]);
-  const [toggleWatched, setToogleWatched] = useState(false);
-
-  function handleWatched(id) {
-    requestWatchedApi.toggleWatched(token, id);
-    setToogleWatched(!toggleWatched);
-  }
+  const [change, setChange] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     const promise = requestProductionsApi.watchedList(token);
     promise.then((response) => {
-      console.log(response);
       setUserProductions(response.data);
+      setLoading(false);
     });
-  }, [token, toggleWatched]);
+    promise.catch((err) => {
+      alert("Houve um erro na requisição");
+      setLoading(false);
+      console.log(err);
+    });
+  }, [token, change]);
 
   return (
     <>
-      {userProductions.length > 0 ? (
-        userProductions.map((production) => {
-          return (
-            <Prod>
-              <h1>{production.name} </h1>
-              <p>{production.type}</p>
-              <div onClick={() => handleWatched(production.id)}>
-                {production.watched ? <AiFillEye icon="fa-solid fa-eye" /> : <AiOutlineEyeInvisible />}
-              </div>
-              <img src={production.image_url} alt="" />
-              <p>{production.release} </p>
-              <p> {production.description} </p>
-            </Prod>
-          );
-        })
-      ) : (
-        <>
-          <p>Loading Productions...</p>
-        </>
-      )}
+      <Header />
+      <Body>
+        {loading ? (
+          <>
+            <p>Carregando as produções...</p>
+          </>
+        ) : (
+          <>
+            <DisplayProd>
+              {userProductions.length > 0 ? (
+                userProductions.map((production) => {
+                  return <Production data={production} change={change} setChange={setChange} />;
+                })
+              ) : (
+                <>
+                  <p>Não há produções assistidas</p>
+                </>
+              )}
+            </DisplayProd>
+          </>
+        )}
+      </Body>
+      <Footer />
     </>
   );
 }
 
 export default Collection;
 
-const Prod = styled.div`
+const DisplayProd = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   align-items: center;
-  background-color: pink;
-  margin-right: 40px;
-  margin-top: 20px;
-  position: relative;
+  justify-content: center;
+  margin-left: 50px;
+  margin-right: 50px;
+`;
 
-  h1 {
-    font-weight: 700;
-  }
-  img {
-    height: 200px;
-    width: 150px;
-    margin-top: 10px;
-  }
-
-  div {
-    position: absolute;
-    right: 0;
-    top: 0;
-    margin-top: 25px;
-    margin-right: 5px;
-  }
+const Body = styled.div`
+  margin-top: 100px;
+  margin-bottom: 80px;
 `;

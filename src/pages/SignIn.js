@@ -30,7 +30,6 @@ function SignIn() {
     const promise = requestAuthApi.signIn(userSignIn);
     promise.then((response) => {
       setSignInStatus(false);
-      console.log(response.data);
       signIn(response.data.token, response.data.picture);
       navigate("/home");
     });
