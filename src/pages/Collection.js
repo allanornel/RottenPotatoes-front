@@ -30,6 +30,7 @@ function Collection() {
     <>
       <Header />
       <Body>
+        <Title>Produções assistidas</Title>
         {loading ? (
           <>
             <p>Carregando as produções...</p>
@@ -69,4 +70,9 @@ const DisplayProd = styled.div`
 const Body = styled.div`
   margin-top: 100px;
   margin-bottom: 80px;
+`;
+
+const Title = styled.h1`
+  font-size: 35px;
+  text-align: center;
 `;
