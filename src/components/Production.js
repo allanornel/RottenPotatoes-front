@@ -42,6 +42,7 @@ const Container = styled.div`
   margin-right: 40px;
   margin-top: 20px;
   position: relative;
+  width: 220px;
 
   h1 {
     font-weight: 700;
@@ -57,7 +58,7 @@ const Container = styled.div`
     position: absolute;
     right: 0;
     top: 0;
-    margin-top: 45px;
-    margin-right: 20px;
+    margin-top: 52px;
+    margin-right: 35px;
   }
 `;

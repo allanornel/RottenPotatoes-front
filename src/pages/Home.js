@@ -20,6 +20,7 @@ function Home() {
   return (
     <>
       <Header />
+      <Titulo>Produções</Titulo>
       <DisplayProd>
         {productions.map((prod) => {
           return <Production data={prod} change={change} setChange={setChange} />;
@@ -38,7 +39,13 @@ const DisplayProd = styled.div`
   align-items: center;
   justify-content: center;
   margin-left: 50px;
-  margin-top: 100px;
+  margin-top: 50px;
   margin-right: 50px;
   margin-bottom: 80px;
+`;
+
+const Titulo = styled.p`
+  margin-top: 100px;
+  margin-left: 50px;
+  font-size: 50px;
 `;

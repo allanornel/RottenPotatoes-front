@@ -75,4 +75,5 @@ const Body = styled.div`
 const Title = styled.h1`
   font-size: 35px;
   text-align: center;
+  margin-bottom: 30px;
 `;
