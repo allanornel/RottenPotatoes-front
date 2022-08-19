@@ -32,9 +32,9 @@ function Collection() {
       <Body>
         <Title>Produções assistidas</Title>
         {loading ? (
-          <>
+          <DisplayProd>
             <p>Carregando as produções...</p>
-          </>
+          </DisplayProd>
         ) : (
           <>
             <DisplayProd>
